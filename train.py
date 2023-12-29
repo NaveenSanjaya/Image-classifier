@@ -1,5 +1,6 @@
 import argparse
 import os
+from collections import OrderedDict
 import torch
 from torch import nn
 from torch import optim
@@ -60,28 +61,54 @@ def dataloader(dataset, shuffle=False):
 def network_builder(architecture, hidden_units):
     if architecture == "vgg16":
         model = models.vgg16(pretrained=True)
-        input_units = 25088
+        
+        for param in model.parameters():
+            param.requires_grad = False
+
+        classifier = nn.Sequential(OrderedDict([
+                        ('inputs', nn.Linear(25088, hidden_units)),
+                        ('relu', nn.ReLU()),
+                        ('dropout', nn.Dropout(0.2)),
+                        ('hidden_layer', nn.Linear(hidden_units, 512)),
+                        ('relu', nn.ReLU()),
+                        ('hidden_layer', nn.Linear(512, 256)),
+                        ('relu', nn.ReLU()),
+                        ('dropout', nn.Dropout(0.2)), 
+                        ('hidden_layer', nn.Linear(256, 102)), # Output_size=102
+                        ('output', nn.LogSoftmax(dim=1))]))
+            
     elif architecture == "alexnet":
         model = models.alexnet(pretrained=True)
-        input_units = 9216
+        
+        for param in model.parameters():
+            param.requires_grad = False
+
+        classifier = nn.Sequential(OrderedDict([
+                        ('inputs', nn.Linear(9216, hidden_units)),
+                        ('relu', nn.ReLU()),
+                        ('dropout', nn.Dropout(0.2)),
+                        ('hidden_layer', nn.Linear(hidden_units, 256)),
+                        ('relu', nn.ReLU()),
+                        ('dropout', nn.Dropout(0.2)), 
+                        ('hidden_layer', nn.Linear(256, 102)),
+                        ('output', nn.LogSoftmax(dim=1))]))
+
     elif architecture == "densenet":
         model = models.densenet121(pretrained=True)
-        input_units =1024
 
+        for param in model.parameters():
+            param.requires_grad = False
 
-    for param in model.parameters():
-        param.requires_grad = False
-
-    classifier = nn.Sequential(nn.Linear(input_units, hidden_units),
-                           nn.ReLU(),
-                           nn.Dropout(0.5),
-                           nn.Linear(hidden_units, 512),
-                           nn.ReLU(),
-                           nn.Linear(512, 256),
-                           nn.ReLU(),
-                           nn.Dropout(0.5),
-                           nn.Linear(256, 102),
-                           nn.LogSoftmax(dim=1))
+        classifier = nn.Sequential(nn.Linear(1024, hidden_units),
+                            nn.ReLU(),
+                            nn.Dropout(0.5),
+                            nn.Linear(hidden_units, 256),
+                            nn.ReLU(),
+                            nn.Linear(256, 95),
+                            nn.ReLU(),
+                            nn.Dropout(0.5),
+                            nn.Linear(95, 102),
+                            nn.LogSoftmax(dim=1))
 
     model.classifier = classifier
     print("Done: Building the network")
