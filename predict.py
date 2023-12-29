@@ -102,7 +102,7 @@ def main():
     args = get_input()
 
     with open(args.catogey_names, 'r') as f:
-        cat_to_name = json.load(f)
+        cat_to_name = json.load(f, strict=False)
 
     model = load_checkpoint(args.checkpoint)
 
