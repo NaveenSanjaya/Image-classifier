@@ -137,6 +137,9 @@ def train_network(model, epochs, learning_rate, gpu, trainloader, validloader):
             
             optimizer.zero_grad()
             
+            #model.forward() is the outdated way of writing this,
+            #the new way of doing this is simply writing model() for the forward pass
+
             logps = model.forward(inputs)
             loss = criterion(logps, labels)
             loss.backward()
