@@ -1,21 +1,21 @@
 # AI Programming with Python Project
 
-This repository has my submissions for the AI Programming with Python nanodegree program offered by Udacity.
+This repository has my submissions for the [AI Programming with Python nanodegree program](https://www.udacity.com/enrollment/nd089/8.0.19) offered by [Udacity](https://www.udacity.com/).
 
 Please note that Udacity provided the foundation of the code for the projects.
 
 The fundamental foundation of the code provided was a set of helper functions and tips.
 
-My project included functions for, loading the data, and transforming the data defining a suitable classifier for the chosen architecture. The tips provided were general advice on how to approach the project, such as choosing a suitable network architecture and customizing the hyperparameters.
+My project included functions for, loading the data and transforming the data defining a suitable classifier for the chosen architecture. The tips provided were general advice on how to approach the project, such as choosing a suitable network architecture and customizing the hyperparameters.
 
-The first goal of the project was to implement the above-described functionality in a Jupyter Notebook. This involved 
-writing code to read and transform the data 
-choosing a suitable network architecture
-defining a suitable classifier
-training the neural network
-evaluating the neural network
-saving and loading checkpoints of the neural network
-illustrating the predictions visually with the corresponding probabilities.
+The first goal of the project was to implement the above-described functionality in a Jupyter Notebook. This involved, 
+*Writing code to read and transform the data 
+*Choosing a suitable network architecture
+*Defining a suitable classifier
+*Training the neural network
+*Evaluating the neural network
+*Saving and loading checkpoints of the neural network
+*Illustrating the predictions visually with the corresponding probabilities
 
 The project's second goal was to build a command line application allowing the user to choose different network architectures, customize the hyperparameters, use a GPU for training (if available), save and load the model, and use the model to make predictions.
 
